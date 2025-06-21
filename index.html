@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard โรงเรียนศรีสมบูรณ์วิทยา</title>
+    
+    <!-- Chosen Palette: Calm Harmony -->
+    <!-- Application Structure Plan: The SPA is designed with a main navigation controlling visibility of content sections ('pages') within the single document. This structure, moving from a data-centric Dashboard to specific sections like Overview, Admissions, and Gallery, creates a task-oriented user flow. It prioritizes key metrics upfront (enrollment, budget) for quick insights, then allows users to drill down into details. This is more effective than a simple linear scroll as it empowers users to navigate directly to their area of interest, making it feel like a true application. -->
+    <!-- Visualization & Content Choices: 
+        - Student Enrollment Trend: (Report Info: 5-year enrollment numbers) -> (Goal: Show change/growth) -> (Viz: Line Chart) -> (Interaction: Hover for details) -> (Justification: Line charts are ideal for showing trends over time) -> (Library: Chart.js).
+        - Budget Allocation: (Report Info: Departmental budget breakdown) -> (Goal: Compare proportions) -> (Viz: Doughnut Chart) -> (Interaction: Hover for percentage/value) -> (Justification: Doughnut charts clearly show part-to-whole relationships) -> (Library: Chart.js).
+        - Course Diagram: (Report Info: Educational tracks) -> (Goal: Organize/show flow) -> (Viz: HTML/CSS Diagram) -> (Interaction: Static) -> (Justification: A simple visual diagram is clearer than text for showing progression) -> (Method: Tailwind CSS).
+        - Admission Form: (Report Info: Application fields) -> (Goal: Collect data) -> (Viz: HTML Form) -> (Interaction: User input, submission to GAS) -> (Justification: Standard, effective method for data collection) -> (Method: HTML/JS).
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Kanit', sans-serif; scroll-behavior: smooth; }
+        .chart-container { position: relative; width: 100%; max-width: 900px; margin-left: auto; margin-right: auto; height: 350px; max-height: 40vh; }
+        .nav-link.active { color: #0284c7; border-bottom: 2px solid #0284c7; }
+        .content-section { display: none; }
+        .content-section.active { display: block; animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <div class="min-h-screen flex flex-col">
+        <!-- Header & Navigation -->
+        <header class="bg-white shadow-sm sticky top-0 z-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <span class="text-2xl font-bold text-sky-700">โรงเรียนศรีสมบูรณ์วิทยา</span>
+                        </div>
+                        <div class="hidden md:block">
+                            <div id="main-nav" class="ml-10 flex items-baseline space-x-4">
+                                <a href="#dashboard" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-sky-600">แดชบอร์ด</a>
+                                <a href="#overview" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-sky-600">ภาพรวมโรงเรียน</a>
+                                <a href="#gallery" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-sky-600">แกลเลอรี</a>
+                                <a href="#admission" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-sky-600">รับสมัคร/เอกสาร</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="-mr-2 flex md:hidden">
+                        <button id="mobile-menu-button" type="button" class="bg-white inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-slate-500 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                            <span class="sr-only">Open main menu</span>
+                            <div class="space-y-1.5">
+                                <div class="w-6 h-0.5 bg-slate-600"></div>
+                                <div class="w-6 h-0.5 bg-slate-600"></div>
+                                <div class="w-6 h-0.5 bg-slate-600"></div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile menu, show/hide based on menu state. -->
+            <div class="md:hidden hidden" id="mobile-menu">
+                <div id="mobile-main-nav" class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <a href="#dashboard" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-slate-100">แดชบอร์ด</a>
+                    <a href="#overview" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-slate-100">ภาพรวมโรงเรียน</a>
+                    <a href="#gallery" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-slate-100">แกลเลอรี</a>
+                    <a href="#admission" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-slate-100">รับสมัคร/เอกสาร</a>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-grow">
+            <!-- Dashboard Section -->
+            <div id="dashboard" class="content-section p-4 sm:p-6 lg:p-8">
+                <div class="max-w-7xl mx-auto">
+                    <div class="mb-8">
+                        <h1 class="text-3xl font-bold text-slate-900">แดชบอร์ดโรงเรียนศรีสมบูรณ์วิทยา</h1>
+                        <p class="mt-2 text-slate-600">ภาพรวมข้อมูลสำคัญของโรงเรียนในรูปแบบ Interactive ส่วนนี้จะแสดงข้อมูลสถิตินักเรียนและงบประมาณ เพื่อให้เห็นภาพการเติบโตและทิศทางของโรงเรียนได้อย่างชัดเจน</p>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+                        <div class="lg:col-span-3 bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="font-semibold text-lg text-slate-800">แนวโน้มจำนวนนักเรียน (5 ปีล่าสุด)</h3>
+                            <p class="text-sm text-slate-500 mb-4">แสดงการเติบโตของจำนวนนักเรียนทั้งหมดในแต่ละปี</p>
+                            <div class="chart-container"><canvas id="enrollmentChart"></canvas></div>
+                        </div>
+                        <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-md">
+                             <h3 class="font-semibold text-lg text-slate-800">สัดส่วนงบประมาณประจำปี</h3>
+                            <p class="text-sm text-slate-500 mb-4">แสดงการจัดสรรงบประมาณให้กับฝ่ายต่างๆ</p>
+                            <div class="chart-container"><canvas id="budgetChart"></canvas></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overview Section -->
+            <div id="overview" class="content-section p-4 sm:p-6 lg:p-8">
+                 <div class="max-w-7xl mx-auto">
+                    <div class="mb-8">
+                        <h1 class="text-3xl font-bold text-slate-900">ภาพรวมโรงเรียน</h1>
+                        <p class="mt-2 text-slate-600">ส่วนนี้รวบรวมข้อมูลสำคัญเกี่ยวกับโรงเรียน ตั้งแต่หลักสูตรการสอนที่หลากหลาย, แนะนำคณะผู้บริหารและบุคลากร, ไปจนถึงวิสัยทัศน์และพันธกิจของเรา</p>
+                    </div>
+
+                    <!-- Courses -->
+                    <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                        <h2 class="text-2xl font-semibold mb-4 text-slate-800">หลักสูตรการสอน</h2>
+                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                            <div class="bg-slate-50 p-6 rounded-lg border">
+                                <span class="text-4xl">🧪</span>
+                                <h3 class="text-lg font-bold mt-2">วิทย์-คณิต</h3>
+                                <p class="text-sm text-slate-600 mt-1">เน้นวิทยาศาสตร์, เทคโนโลยี, และคณิตศาสตร์เข้มข้น</p>
+                            </div>
+                             <div class="bg-slate-50 p-6 rounded-lg border">
+                                <span class="text-4xl">🎨</span>
+                                <h3 class="text-lg font-bold mt-2">ศิลป์-คำนวณ</h3>
+                                <p class="text-sm text-slate-600 mt-1">เน้นคณิตศาสตร์และภาษาอังกฤษสำหรับสายธุรกิจ</p>
+                            </div>
+                             <div class="bg-slate-50 p-6 rounded-lg border">
+                                <span class="text-4xl">🗣️</span>
+                                <h3 class="text-lg font-bold mt-2">ศิลป์-ภาษา</h3>
+                                <p class="text-sm text-slate-600 mt-1">พัฒนาทักษะภาษาที่ 3 (จีน, ญี่ปุ่น, ฝรั่งเศส)</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Personnel -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-semibold mb-6 text-slate-800">คณะผู้บริหารและบุคลากร</h2>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                            <div>
+                                <img src="https://placehold.co/200x200/a9cce3/ffffff?text=ผอ." alt="Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
+                                <h3 class="font-semibold">นายจำนง ศรีดาวงษ์</h3>
+                                <p class="text-sm text-slate-500">ผู้อำนวยการ</p>
+                            </div>
+                            <div>
+                                <img src="https://placehold.co/200x200/a9cce3/ffffff?text=รองฯ" alt="Vice Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
+                                <h3 class="font-semibold">นางพรรณี โพธิสาร</h3>
+                                <p class="text-sm text-slate-500">หัวหน้าฝ่ายงานบริหารวิชาการ</p>
+                            </div>
+                            <div>
+                                <img src="https://placehold.co/200x200/a9cce3/ffffff?text=รองฯ" alt="Vice Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
+                                <h3 class="font-semibold">นายรัตน ศรีทนษา</h3>
+                                <p class="text-sm text-slate-500">หัวหน้าฝ่ายบริหารงานบุคคล</p>
+                            </div>
+                            <div>
+                                <img src="https://placehold.co/200x200/a9cce3/ffffff?text=รองฯ" alt="Vice Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
+                                <h3 class="font-semibold">นางอุไรวรรณ ศรีพิมมาส</h3>
+                                <p class="text-sm text-slate-500">หัวหน้าฝ่ายงานงบประมาณ</p>
+                            </div>
+                            <div>
+                                <img src="https://placehold.co/200x200/a9cce3/ffffff?text=รองฯ" alt="Vice Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
+                                <h3 class="font-semibold">นายวีระศักดิ์ โพธิสาร</h3>
+                                <p class="text-sm text-slate-500">หัวหน้าฝ่ายงานบริหารทั่วไป</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <!-- Gallery Section -->
+            <div id="gallery" class="content-section p-4 sm:p-6 lg:p-8">
+                <div class="max-w-7xl mx-auto">
+                    <div class="mb-8">
+                        <h1 class="text-3xl font-bold text-slate-900">แกลเลอรีภาพกิจกรรม</h1>
+                        <p class="mt-2 text-slate-600">ประมวลภาพความทรงจำและบรรยากาศกิจกรรมต่างๆ ของโรงเรียนที่ผ่านมาตลอดปีการศึกษา</p>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                         <div class="grid gap-4">
+                            <div><img class="h-auto max-w-full rounded-lg shadow-md hover:opacity-80 transition-opacity" src="https://placehold.co/500x800/85c1e9/ffffff?text=กิจกรรมวันแม่" alt=""></div>
+                            <div><img class="h-auto max-w-full rounded-lg shadow-md hover:opacity-80 transition-opacity" src="https://placehold.co/500x500/f5b041/ffffff?text=เข้าค่ายลูกเสือ" alt=""></div>
+                        </div>
+                        <div class="grid gap-4">
+                             <div><img class="h-auto max-w-full rounded-lg shadow-md hover:opacity-80 transition-opacity" src="https://placehold.co/500x500/76d7c4/ffffff?text=แข่งกีฬา" alt=""></div>
+                            <div><img class="h-auto max-w-full rounded-lg shadow-md hover:opacity-80 transition-opacity" src="https://placehold.co/500x800/e59866/ffffff?text=ทัศนศึกษา" alt=""></div>
+                        </div>
+                        <div class="grid gap-4">
+                            <div><img class="h-auto max-w-full rounded-lg shadow-md hover:opacity-80 transition-opacity" src="https://placehold.co/500x800/d7bde2/ffffff?text=วันวิทยาศาสตร์" alt=""></div>
+                            <div><img class="h-auto max-w-full rounded-lg shadow-md hover:opacity-80 transition-opacity" src="https://placehold.co/500x500/f7dc6f/ffffff?text=มอบรางวัล" alt=""></div>
+                        </div>
+                        <div class="grid gap-4">
+                            <div><img class="h-auto max-w-full rounded-lg shadow-md hover:opacity-80 transition-opacity" src="https://placehold.co/500x500/fadbd8/ffffff?text=กิจกรรมชุมนุม" alt=""></div>
+                            <div><img class="h-auto max-w-full rounded-lg shadow-md hover:opacity-80 transition-opacity" src="https://placehold.co/500x800/a9dfbf/ffffff?text=Big Cleaning Day" alt=""></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admission Section -->
+            <div id="admission" class="content-section p-4 sm:p-6 lg:p-8">
+                 <div class="max-w-7xl mx-auto">
+                     <div class="mb-8">
+                        <h1 class="text-3xl font-bold text-slate-900">รับสมัครและดาวน์โหลดเอกสาร</h1>
+                        <p class="mt-2 text-slate-600">กรอกใบสมัครนักเรียนใหม่ทางออนไลน์ และดาวน์โหลดเอกสารสำคัญต่างๆ ที่เกี่ยวข้องกับการศึกษาได้ที่นี่</p>
+                    </div>
+                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-md">
+                             <h2 class="text-2xl font-semibold mb-4 text-slate-800">รับสมัครนักเรียนออนไลน์ ปีการศึกษา 2568</h2>
+                            <form id="admissionForm">
+                                <h3 class="text-lg font-semibold mb-4 text-slate-700">ข้อมูลนักเรียน</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <input name="studentName" required class="w-full bg-slate-100 text-slate-900 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500" type="text" placeholder="ชื่อ-สกุล*">
+                                    <input name="studentId" required class="w-full bg-slate-100 text-slate-900 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500" type="text" placeholder="เลขบัตรประชาชน*">
+                                    <input name="studentDob" required class="w-full bg-slate-100 text-slate-900 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500" type="date" placeholder="วัน/เดือน/ปีเกิด*">
+                                    <select name="studentLevel" required class="w-full bg-slate-100 text-slate-900 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500">
+                                        <option value="" disabled selected>ระดับชั้นที่สมัคร*</option>
+                                        <option>อนุบาลปีที่ 1</option>
+                                        <option>ประถมศึกษาปีที่ 1</option>
+                                        <option>ประถมศึกษาปีที่ 4</option>
+                                        <option>มัธยมศึกษาปีที่ 1</option>
+                                    </select>
+                                </div>
+                                <div class="mt-4">
+                                    <input name="previousSchool" required class="w-full bg-slate-100 text-slate-900 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500" type="text" placeholder="โรงเรียนเดิม*">
+                                </div>
+                                <h3 class="text-lg font-semibold mt-6 mb-4 text-slate-700">ข้อมูลผู้ปกครอง</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                   <input name="parentName" required class="w-full bg-slate-100 text-slate-900 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500" type="text" placeholder="ชื่อ-สกุล ผู้ปกครอง*">
+                                   <input name="parentPhone" required class="w-full bg-slate-100 text-slate-900 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500" type="tel" placeholder="เบอร์โทรศัพท์ติดต่อ*">
+                                </div>
+                                <div id="form-status-message" class="mt-6 text-center"></div>
+                                 <div class="mt-6 text-left">
+                                    <button id="submit-button" class="bg-sky-600 text-white font-bold py-2 px-6 rounded-md hover:bg-sky-700 transition duration-300 disabled:bg-slate-400" type="submit">ส่งใบสมัคร</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h2 class="text-2xl font-semibold mb-4 text-slate-800">ดาวน์โหลดเอกสาร</h2>
+                            <ul class="space-y-3">
+                                <li class="flex justify-between items-center border-b border-slate-200 pb-2">
+                                   <span class="text-slate-700"><span class="mr-3">📄</span>ระเบียบการรับสมัคร</span>
+                                   <a href="#" class="text-sky-600 hover:underline text-sm font-medium">ดาวน์โหลด</a>
+                                </li>
+                                <li class="flex justify-between items-center border-b border-slate-200 pb-2">
+                                   <span class="text-slate-700"><span class="mr-3">📄</span>ใบสมัครนักเรียนใหม่</span>
+                                   <a href="#" class="text-sky-600 hover:underline text-sm font-medium">ดาวน์โหลด</a>
+                                </li>
+                                 <li class="flex justify-between items-center border-b border-slate-200 pb-2">
+                                   <span class="text-slate-700"><span class="mr-3">📄</span>เอกสารมอบตัว</span>
+                                   <a href="#" class="text-sky-600 hover:underline text-sm font-medium">ดาวน์โหลด</a>
+                                </li>
+                                <li class="flex justify-between items-center">
+                                   <span class="text-slate-700"><span class="mr-3">📅</span>ปฏิทินการศึกษา</span>
+                                   <a href="#" class="text-sky-600 hover:underline text-sm font-medium">ดาวน์โหลด</a>
+                                </li>
+                            </ul>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-white mt-12">
+            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm text-slate-500">
+                <p>โรงเรียนศรีสมบูรณ์วิทยา | หมู่ 9 ตำบลหนองโก อำเภอกระนวน จังหวัดขอนแก่น 40170</p>
+                <p class="mt-1">&copy; 2568 โรงเรียนศรีสมบูรณ์วิทยา. สงวนลิขสิทธิ์.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Navigation Logic ---
+            const mainNav = document.getElementById('main-nav');
+            const mobileMainNav = document.getElementById('mobile-main-nav');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const contentSections = document.querySelectorAll('.content-section');
+
+            function setActiveLink(targetId) {
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.toggle('active', link.hash === targetId);
+                });
+            }
+
+            function showSection(targetId) {
+                contentSections.forEach(section => {
+                    section.classList.toggle('active', '#' + section.id === targetId);
+                });
+                setActiveLink(targetId);
+                window.scrollTo(0,0);
+            }
+
+            function handleNavClick(event) {
+                if (event.target.tagName === 'A') {
+                    event.preventDefault();
+                    const targetId = event.target.hash;
+                    showSection(targetId);
+                    if (!mobileMenu.classList.contains('hidden')) {
+                         mobileMenu.classList.add('hidden');
+                    }
+                }
+            }
+
+            mainNav.addEventListener('click', handleNavClick);
+            mobileMainNav.addEventListener('click', handleNavClick);
+            
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Show initial section based on hash or default to dashboard
+            const initialSection = window.location.hash || '#dashboard';
+            showSection(initialSection);
+
+            // --- Chart.js Implementation ---
+            // Enrollment Chart (Line)
+            const enrollmentCtx = document.getElementById('enrollmentChart').getContext('2d');
+            new Chart(enrollmentCtx, {
+                type: 'line',
+                data: {
+                    labels: ['2564', '2565', '2566', '2567', '2568'],
+                    datasets: [{
+                        label: 'จำนวนนักเรียน (คน)',
+                        data: [1850, 1920, 1980, 2100, 2150],
+                        borderColor: '#0ea5e9',
+                        backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        pointBackgroundColor: '#0284c7',
+                        pointRadius: 5,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: false } },
+                    plugins: { legend: { display: false } }
+                }
+            });
+
+            // Budget Chart (Doughnut)
+            const budgetCtx = document.getElementById('budgetChart').getContext('2d');
+            new Chart(budgetCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['ฝ่ายวิชาการ', 'ฝ่ายบริหาร', 'ฝ่ายกิจการนักเรียน', 'อาคารสถานที่', 'เทคโนโลยี'],
+                    datasets: [{
+                        label: 'สัดส่วนงบประมาณ',
+                        data: [40, 25, 15, 15, 5],
+                        backgroundColor: ['#0ea5e9', '#38bdf8', '#7dd3fc', '#bae6fd', '#e0f2fe'],
+                        borderColor: '#ffffff',
+                        borderWidth: 2,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { padding: 15 } }
+                    }
+                }
+            });
+
+            // --- Google Sheet Form Submission Logic ---
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbz-Kx3ktL7d39CEc5bogy4HwCNNVmSqgwzD7p-aJ2s1l-aArAFF0UpGvTLtII1r_LFD/exec';
+            const form = document.getElementById('admissionForm');
+            const submitButton = document.getElementById('submit-button');
+            const statusMessage = document.getElementById('form-status-message');
+
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+                submitButton.disabled = true;
+                submitButton.textContent = 'กำลังส่งข้อมูล...';
+                statusMessage.textContent = '';
+                statusMessage.className = 'mt-6 text-center';
+
+                fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                    .then(response => response.json())
+                    .then(data => {
+                        statusMessage.textContent = 'ส่งใบสมัครเรียบร้อยแล้ว! ขอบคุณครับ';
+                        statusMessage.classList.add('text-green-600');
+                        form.reset();
+                    })
+                    .catch(error => {
+                        statusMessage.textContent = 'เกิดข้อผิดพลาด! ไม่สามารถส่งใบสมัครได้';
+                        statusMessage.classList.add('text-red-600');
+                    })
+                    .finally(() => {
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'ส่งใบสมัคร';
+                    });
+            });
+        });
+    </script>
+</body>
+</html>
