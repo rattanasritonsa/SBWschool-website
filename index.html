@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
@@ -30,6 +30,21 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .dropdown:hover .dropdown-menu { display: block; }
         .dropdown-menu { display: none; }
+        .hero-banner {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://img5.pic.in.th/file/secure-sv1/8c139923d9646bda978d5d63f728ddc2.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .shadow-text { text-shadow: 2px 2px 4px rgba(0,0,0,0.6); }
+        .animate-marquee {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee-scroll 30s linear infinite;
+        }
+        @keyframes marquee-scroll {
+            from { transform: translateX(0%); }
+            to { transform: translateX(-100%); }
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
@@ -44,14 +59,15 @@
                              <a href="#dashboard" class="text-2xl font-bold text-sky-700">SBW</a>
                         </div>
                         <div class="hidden md:block">
-                            <div id="main-nav" class="ml-10 flex items-baseline space-x-2">
-                                <a href="#dashboard" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-sky-600">แดชบอร์ด</a>
+                            <div id="main-nav" class="ml-10 flex items-baseline space-x-1 lg:space-x-2">
+                                <a href="#dashboard" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-sky-600">หน้าแรก</a>
                                 <a href="#overview" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-sky-600">ภาพรวม</a>
                                 <a href="#personnel" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-sky-600">บุคลากร</a>
+                                <a href="#administration" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-sky-600">การบริหารงาน</a>
                                 <a href="#announcements" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-sky-600">ประกาศ</a>
                                 <a href="#gallery" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-sky-600">แกลเลอรี</a>
+                                <a href="#ebooks" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-sky-600">e-book</a>
                                 <a href="#admission" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-sky-600">รับสมัคร</a>
-                                <!-- Updated Dropdown Menu with clickable links -->
                                 <div class="relative dropdown">
                                     <button class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-sky-600 flex items-center">
                                         <span>ระบบออนไลน์</span>
@@ -86,11 +102,13 @@
             <!-- Mobile menu, show/hide based on menu state. -->
             <div class="md:hidden hidden" id="mobile-menu">
                 <div id="mobile-main-nav" class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                    <a href="#dashboard" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-slate-100">แดชบอร์ด</a>
+                    <a href="#dashboard" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-slate-100">หน้าแรก</a>
                     <a href="#overview" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-slate-100">ภาพรวม</a>
                     <a href="#personnel" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-slate-100">บุคลากร</a>
+                    <a href="#administration" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-slate-100">การบริหารงาน</a>
                     <a href="#announcements" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-slate-100">ประกาศ</a>
                     <a href="#gallery" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-slate-100">แกลเลอรี</a>
+                    <a href="#ebooks" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-slate-100">e-book</a>
                     <a href="#admission" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-slate-100">รับสมัคร</a>
                     <div class="border-t border-slate-200 my-2"></div>
                     <h3 class="px-3 pt-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">ระบบออนไลน์</h3>
@@ -106,22 +124,76 @@
 
         <main class="flex-grow">
             <!-- Dashboard Section -->
-            <div id="dashboard" class="content-section p-4 sm:p-6 lg:p-8">
-                <div class="max-w-7xl mx-auto">
-                    <div class="mb-8">
-                        <h1 class="text-3xl font-bold text-slate-900">แดชบอร์ดโรงเรียนศรีสมบูรณ์วิทยา</h1>
-                        <p class="mt-2 text-slate-600">ภาพรวมข้อมูลสำคัญของโรงเรียนในรูปแบบ Interactive ส่วนนี้จะแสดงข้อมูลสถิตินักเรียนและงบประมาณ เพื่อให้เห็นภาพการเติบโตและทิศทางของโรงเรียนได้อย่างชัดเจน</p>
+            <div id="dashboard" class="content-section">
+                <!-- Hero Banner -->
+                <div class="hero-banner h-[50vh] flex items-center justify-center text-white text-center px-4 relative">
+                    <div>
+                        <h1 class="text-4xl md:text-6xl font-bold leading-tight shadow-text"> </h1>
                     </div>
-                    <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
-                        <div class="lg:col-span-3 bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="font-semibold text-lg text-slate-800">แนวโน้มจำนวนนักเรียน (5 ปีล่าสุด)</h3>
-                            <p class="text-sm text-slate-500 mb-4">แสดงการเติบโตของจำนวนนักเรียนทั้งหมดในแต่ละปี</p>
-                            <div class="chart-container"><canvas id="enrollmentChart"></canvas></div>
+                    <!-- Marquee Section -->
+                    <div class="absolute bottom-0 left-0 w-full bg-black/50 overflow-hidden">
+                         <div class="animate-marquee">
+                            <span class="text-lg md:text-xl py-3 px-4 text-white">ยินดีต้อนรับสู่โรงเรียนศรีสมบูรณ์วิทยา 🔹 แหล่งบ่มเพาะความรู้ คู่คุณธรรม สร้างสรรค์นวัตกรสู่สากล 🔹</span>
                         </div>
-                        <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-md">
-                             <h3 class="font-semibold text-lg text-slate-800">สัดส่วนงบประมาณประจำปี</h3>
-                            <p class="text-sm text-slate-500 mb-4">แสดงการจัดสรรงบประมาณให้กับฝ่ายต่างๆ</p>
-                            <div class="chart-container"><canvas id="budgetChart"></canvas></div>
+                    </div>
+                </div>
+
+                <div class="p-4 sm:p-6 lg:p-8">
+                    <div class="max-w-7xl mx-auto">
+                        <!-- Director's Welcome Section -->
+                         <div class="bg-white p-8 rounded-lg shadow-md mb-8 text-center">
+                            <h2 class="text-3xl font-bold text-slate-900 mb-4">สารจากผู้อำนวยการ</h2>
+                            <img src="https://img2.pic.in.th/pic/c2bd36ff-e070-4598-90d9-ca3124e9e73e.png" alt="[Image of ผู้อำนวยการโรงเรียน]" class="w-40 h-40 object-cover mx-auto mb-4">
+                            <h3 class="font-semibold text-xl text-slate-800">นายจำนง ศรีดาวงษ์</h3>
+                            <p class="text-md text-sky-600 mb-4">ผู้อำนวยการโรงเรียนศรีสมบูรณ์วิทยา</p>
+                            <blockquote class="text-slate-600 max-w-3xl mx-auto italic">
+                                "ในนามของคณะผู้บริหารและบุคลากรทางการศึกษา ผมขอต้อนรับผู้ปกครองและนักเรียนทุกท่านเข้าสู่รั้วโรงเรียนศรีสมบูรณ์วิทยาด้วยความยินดียิ่ง เรามุ่งมั่นที่จะสร้างสรรค์สภาพแวดล้อมแห่งการเรียนรู้ที่อบอุ่นและปลอดภัย เพื่อให้นักเรียนได้ค้นพบศักยภาพของตนเองอย่างเต็มที่ และเติบโตเป็นผู้ใหญ่ที่มีคุณภาพและคุณธรรมต่อไป"
+                            </blockquote>
+                        </div>
+
+                        <div class="mb-8">
+                            <h2 class="text-3xl font-bold text-slate-900">แดชบอร์ดข้อมูล</h2>
+                            <p class="mt-2 text-slate-600">ภาพรวมข้อมูลสำคัญของโรงเรียน เพื่อให้เห็นภาพการเติบโตและทิศทางของโรงเรียนได้อย่างชัดเจน</p>
+                        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-8">
+                            <div class="lg:col-span-3 bg-white p-6 rounded-lg shadow-md">
+                                <h3 class="font-semibold text-lg text-slate-800">แนวโน้มจำนวนนักเรียน (5 ปีล่าสุด)</h3>
+                                <p class="text-sm text-slate-500 mb-4">แสดงการเติบโตของจำนวนนักเรียนทั้งหมดในแต่ละปี</p>
+                                <div class="chart-container"><canvas id="enrollmentChart"></canvas></div>
+                            </div>
+                            <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-md">
+                                 <h3 class="font-semibold text-lg text-slate-800">สัดส่วนงบประมาณประจำปี</h3>
+                                <p class="text-sm text-slate-500 mb-4">แสดงการจัดสรรงบประมาณให้กับฝ่ายต่างๆ</p>
+                                <div class="chart-container"><canvas id="budgetChart"></canvas></div>
+                            </div>
+                        </div>
+
+                        <!-- National Test Scores Section -->
+                         <div class="mb-8">
+                            <h2 class="text-3xl font-bold text-slate-900">สถิติผลการทดสอบระดับชาติ</h2>
+                            <p class="mt-2 text-slate-600">เปรียบเทียบผลคะแนนเฉลี่ยของการทดสอบระดับชาติต่างๆ ในช่วง 4 ปีล่าสุด</p>
+                        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="bg-white p-6 rounded-lg shadow-md">
+                                <h3 class="font-semibold text-lg text-slate-800">ผลสอบ RT ป.1 (4 ปีล่าสุด)</h3>
+                                <p class="text-sm text-slate-500 mb-4">คะแนนเฉลี่ยการอ่านออกเสียงและการอ่านรู้เรื่อง</p>
+                                <div class="chart-container"><canvas id="rtScoreChart"></canvas></div>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg shadow-md">
+                                <h3 class="font-semibold text-lg text-slate-800">ผลสอบ NT ป.3 (4 ปีล่าสุด)</h3>
+                                <p class="text-sm text-slate-500 mb-4">คะแนนเฉลี่ยความสามารถด้านภาษาไทยและคณิตศาสตร์</p>
+                                <div class="chart-container"><canvas id="ntScoreChart"></canvas></div>
+                            </div>
+                             <div class="bg-white p-6 rounded-lg shadow-md">
+                                <h3 class="font-semibold text-lg text-slate-800">ผลสอบ O-NET ป.6 (4 ปีล่าสุด)</h3>
+                                <p class="text-sm text-slate-500 mb-4">คะแนนเฉลี่ยใน 4 กลุ่มสาระการเรียนรู้หลัก</p>
+                                <div class="chart-container"><canvas id="onetP6ScoreChart"></canvas></div>
+                            </div>
+                             <div class="bg-white p-6 rounded-lg shadow-md">
+                                <h3 class="font-semibold text-lg text-slate-800">ผลสอบ O-NET ม.3 (4 ปีล่าสุด)</h3>
+                                <p class="text-sm text-slate-500 mb-4">คะแนนเฉลี่ยใน 4 กลุ่มสาระการเรียนรู้หลัก</p>
+                                <div class="chart-container"><canvas id="onetM3ScoreChart"></canvas></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -138,7 +210,7 @@
                     <!-- History -->
                     <div class="bg-white p-6 rounded-lg shadow-md mb-6">
                         <h2 class="text-2xl font-semibold mb-4 text-slate-800">ประวัติโรงเรียน</h2>
-                        <p class="text-slate-600 leading-relaxed">โรงเรียนศรีสมบูรณ์วิทยาก่อตั้งขึ้นเมื่อวันที่ 15 พฤษภาคม พ.ศ. 2500 ด้วยความมุ่งมั่นของชุมชนที่ต้องการสร้างสถานศึกษาที่มีคุณภาพเพื่อบุตรหลาน จากจุดเริ่มต้นที่เป็นเพียงอาคารไม้เล็กๆ ปัจจุบันเราได้เติบโตเป็นสถาบันการศึกษาชั้นนำของจังหวัด เพียบพร้อมด้วยอาคารเรียนและสื่อการสอนที่ทันสมัย ตลอดระยะเวลากว่า 60 ปี เราได้สร้างบุคลากรที่มีคุณภาพออกสู่สังคมมากมาย และยังคงยึดมั่นในปณิธานเดิมที่จะพัฒนาผู้เรียนให้มีความเป็นเลิศทางวิชาการและเปี่ยมด้วยคุณธรรมต่อไป</p>
+                        <p class="text-slate-600 leading-relaxed">โรงเรียนศรีสมบูรณ์วิทยา เดิมชื่อโรงเรียนบ้านศรีสมบูรณ์ ก่อตั้งขึ้นเมื่อวันที่ 23 กรกฎาคม พ.ศ. 2502 ด้วยความมุ่งมั่นของชุมชนที่ต้องการสร้างสถานศึกษาที่มีคุณภาพเพื่อบุตรหลาน จากจุดเริ่มต้นที่เป็นเพียงอาคารไม้เล็กๆ ปัจจุบันเราได้เติบโตเป็นสถาบันการศึกษาชั้นนำของจังหวัด เพียบพร้อมด้วยอาคารเรียนและสื่อการสอนที่ทันสมัย ตลอดระยะเวลากว่า 60 ปี เราได้สร้างบุคลากรที่มีคุณภาพออกสู่สังคมมากมาย และยังคงยึดมั่นในปณิธานเดิมที่จะพัฒนาผู้เรียนให้มีความเป็นเลิศทางวิชาการและเปี่ยมด้วยคุณธรรมต่อไป</p>
                     </div>
                     
                     <!-- Vision & Mission -->
@@ -147,15 +219,16 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <h3 class="font-semibold text-lg text-sky-700 mb-2">วิสัยทัศน์ (Vision)</h3>
-                                <p class="text-slate-600">"เป็นองค์กรแห่งการเรียนรู้ชั้นนำที่สร้างสรรค์นวัตกรสู่สากลภายในปี 2570"</p>
+                                <p class="text-slate-600">"ภายในปี 2568 โรงเรียนศรีสมบูรณ์วิทยา มุ่งมั่นจัดการศึกษาพัฒนาผู้เรียนให้มีคุณภาพตามมาตรฐานการศึกษา วิชาการดี มีคุณธรรม ก้าวทันเทคโนโลยี มีทักษะวิชาชีพ สุขภาพดีถ้วนหน้า น้อมนำปรัชญาของเศรษฐกิจพอเพียงบูรณาการโดยชุมชนมีส่วนร่วม"</p>
                             </div>
                              <div>
                                 <h3 class="font-semibold text-lg text-sky-700 mb-2">พันธกิจ (Mission)</h3>
                                 <ul class="list-disc list-inside text-slate-600 space-y-1">
-                                    <li>จัดการศึกษาให้ผู้เรียนมีคุณภาพตามมาตรฐานสากล</li>
-                                    <li>ส่งเสริมการใช้เทคโนโลยีดิจิทัลในการจัดการเรียนรู้</li>
-                                    <li>พัฒนานักเรียนให้มีทักษะในศตวรรษที่ 21</li>
-                                    <li>สร้างเครือข่ายความร่วมมือกับทุกภาคส่วนในการพัฒนาการศึกษา</li>
+                                    <li>จัดกิจกรรมส่งเสริมด้านผลสัมฤทธิ์ทางวิชาการของผู้เรียน</li>
+                                    <li>จัดกิจกรรมส่งเสริมด้านคุณลักษณะที่พึงประสงค์ของผู้เรียน</li>
+                                    <li>ส่งเสริมและพัฒนาประสิทธิภาพของการบริหารจัดการและการพัฒนาสถานศึกษา</li>
+                                    <li>ส่งเสริมและพัฒนากระบวนการจัดการเรียนการสอนที่เน้นผู้เรียนเป็นสำคัญ</li>
+                                    <li>ส่งเสริมและพัฒนาระบบการประกันคุณภาพภายในของสถานศึกษาตามที่กำหนดในกฏกระทรวง</li>
                                 </ul>
                             </div>
                         </div>
@@ -189,301 +262,107 @@
             <div id="personnel" class="content-section p-4 sm:p-6 lg:p-8">
                  <div class="max-w-7xl mx-auto">
                     <div class="mb-8">
-                        <h1 class="text-3xl font-bold text-slate-900">บุคลากรและกลุ่มงานบริหาร</h1>
-                        <p class="mt-2 text-slate-600">แนะนำคณะบุคคลและกลุ่มงานต่างๆ ที่มีส่วนสำคัญในการขับเคลื่อนและบริหารจัดการโรงเรียนของเรา</p>
+                        <h1 class="text-3xl font-bold text-slate-900">บุคลากร</h1>
+                        <p class="mt-2 text-slate-600">แนะนำคณะผู้บริหาร บุคลากร และคณะกรรมการสถานศึกษา</p>
                     </div>
 
-                    <!-- Management -->
-                    <div class="bg-white p-6 rounded-lg shadow-md mb-6">
-                        <h2 class="text-2xl font-semibold mb-6 text-slate-800">ผู้บริหารและบุคลากร</h2>
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8 text-center">
-                            <div>
-                                <img src="https://img2.pic.in.th/pic/4b7bd122-7e02-4c83-a873-ac9d24b26ca9.png" alt="Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นายจำนง ศรีดาวงษ์</h3>
-                                <p class="text-sm text-slate-500">ผู้อำนวยการ</p>
-                            </div>
-                            <div>
-                                <img src="https://placehold.co/200x200/aed6f1/ffffff?text=รองฯ" alt="Vice Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นางพรรณี โพธิสาร</h3>
-                                <p class="text-sm text-slate-500">ครูชำนาญการพิเศษ</p>
-                            </div>
-                            <div>
-                                <img src="https://img2.pic.in.th/pic/df96e94c-91b2-4c00-8882-e7056de0b0c2.png" alt="Vice Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นางอุไรวรรณ ศรีพิมมาส</h3>
-                                <p class="text-sm text-slate-500">ครูชำนาญการพิเศษ</p>
-                            </div>
-                            <div>
-                                <img src="https://img5.pic.in.th/file/secure-sv1/00b83918-82bc-4f8f-8caf-578181cab6eb.png" alt="Vice Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นางจุรีพร ผจงศิลป์</h3>
-                                <p class="text-sm text-slate-500">ครูชำนาญการพิเศษ</p>
-                            </div>
-                            <div>
-                                <img src="https://img2.pic.in.th/pic/1649bcbb-54fa-49ac-a770-b76e6e51cff5.png" alt="Vice Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นายวีระศักดิ์ โพธิสาร</h3>
-                                <p class="text-sm text-slate-500">ครูชำนาญการพิเศษ</p>
-                            </div>
-                            <div>
-                                <img src="https://img2.pic.in.th/pic/899bf469-3225-46bd-980a-fe28c3a1b96d.png" alt="Vice Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นายวินัย ผจงศิลป์</h3>
-                                <p class="text-sm text-slate-500">ครูชำนาญการพิเศษ</p>
-                            </div>
-                            <div>
-                                <img src="https://placehold.co/200x200/aed6f1/ffffff?text=รองฯ" alt="Vice Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นายรัตน ศรีทนษา</h3>
-                                <p class="text-sm text-slate-500">ครูชำนาญการพิเศษ</p>
-                            </div>
-                            <div>
-                                <img src="https://placehold.co/200x200/aed6f1/ffffff?text=รองฯ" alt="Vice Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นางมัสลิน ปุลาสะเก</h3>
-                                <p class="text-sm text-slate-500">ครูชำนาญการพิเศษ</p>
-                            </div>
-                            <div>
-                                <img src="https://img2.pic.in.th/pic/4185c2b8-f5ff-4e04-a8fc-29a16ebaecec.png" alt="Vice Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นายสุระพล นาคศรี</h3>
-                                <p class="text-sm text-slate-500">ครูชำนาญการพิเศษ</p>
-                            </div>
-                            <div>
-                                <img src="https://placehold.co/200x200/aed6f1/ffffff?text=รองฯ" alt="Vice Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นางสุนิดา ใจสอาด</h3>
-                                <p class="text-sm text-slate-500">ครูชำนาญการพิเศษ</p>
-                            </div>
-                            <div>
-                                <img src="https://img2.pic.in.th/pic/d7262d21-e038-4de3-b9ae-e62dd9b3963b.png" alt="Vice Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นางนันทิภา อบอุ่น</h3>
-                                <p class="text-sm text-slate-500">ครูชำนาญการ</p>
-                            </div>
-                            <div>
-                                <img src="https://img2.pic.in.th/pic/95646331-e436-4bbb-a851-f0d13e74ac9e.png" alt="Vice Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นางสาวพนิตสุภา ชนะรินทร์</h3>
-                                <p class="text-sm text-slate-500">ครู</p>
-                            </div>
-                            <div>
-                                <img src="https://img2.pic.in.th/pic/9dcac253-ed76-40f9-9072-188e7e34f78d.png" alt="Vice Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นางกนิษฐา สุกทน</h3>
-                                <p class="text-sm text-slate-500">ครู</p>
-                            </div>
-                            <div>
-                                <img src="https://img2.pic.in.th/pic/8034275f-7009-4b43-aca9-01dfcfd0213be5ba3ab1639c3f5f.png" alt="Vice Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นางสาวนาตยา คำวันดี</h3>
-                                <p class="text-sm text-slate-500">ครู</p>
-                            </div>
-                            <div>
-                                <img src="https://img2.pic.in.th/pic/d48ff0cb-92b1-496d-a9ce-864fc800e444.png" alt="Vice Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นายเขมนันท์ ขุนสอน</h3>
-                                <p class="text-sm text-slate-500">ครู</p>
-                            </div>
-                            <div>
-                                <img src="https://img2.pic.in.th/pic/63152069-4234-4511-85c8-65e65f7e3970.png" alt="Vice Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นางสาวสุรัชดากร เพชรมณี</h3>
-                                <p class="text-sm text-slate-500">ครู</p>
-                            </div>
-                            <div>
-                                <img src="https://placehold.co/200x200/aed6f1/ffffff?text=รองฯ" alt="Vice Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นางอุบล แก้วแสนเมือง</h3>
-                                <p class="text-sm text-slate-500">พนักงานราชการ</p>
-                            </div>
-                            <div>
-                                <img src="https://img5.pic.in.th/file/secure-sv1/1377e4da-7eab-46be-9e31-3c700944377e.png" alt="Vice Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นางสาวกาญจนา เวียงปัตติ</h3>
-                                <p class="text-sm text-slate-500">ครูอัตราจ้าง</p>
-                            </div>
-                            <div>
-                                <img src="https://img2.pic.in.th/pic/bec0fc67-70a3-41ab-9070-3a75991c01dd.png" alt="Vice Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นายจักรกริช หวายฤทธิ์</h3>
-                                <p class="text-sm text-slate-500">เจ้าหน้าที่ธุระการ</p>
-                            </div>
-                            <div>
-                                <img src="https://img5.pic.in.th/file/secure-sv1/5c3927a3-2cd3-4677-a363-08f89ba69295.png" alt="Vice Director" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นายพงษ์ภรณ์ ศรีสุพัฒน์</h3>
-                                <p class="text-sm text-slate-500">นักการภารโรง</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Updated Administrative Groups -->
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="space-y-8">
                         <div class="bg-white p-6 rounded-lg shadow-md">
-                             <h3 class="text-xl font-semibold mb-4 text-slate-800">กลุ่มงานวิชาการ</h3>
-                             <p class="text-slate-600 mb-4">ดูแลและพัฒนาหลักสูตร, การวัดผลประเมินผล, และส่งเสริมความเป็นเลิศทางวิชาการ</p>
-                             <div class="border-t border-slate-200 pt-4 space-y-3">
-                                <div class="flex items-center space-x-4">
-                                    <img src="https://placehold.co/100x100/aed6f1/ffffff?text=ครู" alt="[Image of บุคลากร]" class="w-12 h-12 rounded-full">
-                                    <div>
-                                        <p class="font-medium text-slate-800">นางพรรณี โพธิสาร</p>
-                                        <p class="text-sm text-slate-500">หัวหน้ากลุ่มงานวิชาการ</p>
-                                    </div>
-                                    <img src="https://img2.pic.in.th/pic/95646331-e436-4bbb-a851-f0d13e74ac9e.png" alt="[Image of บุคลากร]" class="w-12 h-12 rounded-full">
-                                    <div>
-                                        <p class="font-medium text-slate-800">นางสาวพนิตสุภา ชนะรินทร์</p>
-                                        <p class="text-sm text-slate-500">งานประกันภายใน</p>
-                                    </div>
-                                    <img src="https://img2.pic.in.th/pic/63152069-4234-4511-85c8-65e65f7e3970.png" alt="[Image of บุคลากร]" class="w-12 h-12 rounded-full">
-                                    <div>
-                                        <p class="font-medium text-slate-800">นางสาวสุรัชดากร เพชรมณี</p>
-                                        <p class="text-sm text-slate-500">กิจกรรมวันสุนทรภู่</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center space-x-4">
-                                    <img src="https://placehold.co/100x100/aed6f1/ffffff?text=ครู" alt="[Image of บุคลากร]" class="w-12 h-12 rounded-full">
-                                    <div>
-                                        <p class="font-medium text-slate-800">นางมัสลิน ปุลาสะเก</p>
-                                        <p class="text-sm text-slate-500">งานวัดผลและประเมินผล</p>
-                                    </div>
-                                    <img src="https://img5.pic.in.th/file/secure-sv1/00b83918-82bc-4f8f-8caf-578181cab6eb.png" alt="[Image of บุคลากร]" class="w-12 h-12 rounded-full">
-                                    <div>
-                                        <p class="font-medium text-slate-800">นางจุรีพร ผจงศิลป์</p>
-                                        <p class="text-sm text-slate-500">กิจกรรมทัศนศึกษา</p>
-                                    </div>
-                                    <img src="https://img2.pic.in.th/pic/8034275f-7009-4b43-aca9-01dfcfd0213be5ba3ab1639c3f5f.png" alt="[Image of บุคลากร]" class="w-12 h-12 rounded-full">
-                                    <div>
-                                        <p class="font-medium text-slate-800">นางสาวนาตยา คำวันดี</p>
-                                        <p class="text-sm text-slate-500">โครงการ/กิจกรรม/อนุบาล</p>
-                                    </div>
-                                </div>
-                             </div>
+                            <h2 class="text-2xl font-semibold mb-6 text-slate-800">ผู้บริหารและบุคลากร</h2>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 text-center">
+                                <div><img src="https://img2.pic.in.th/pic/4b7bd122-7e02-4c83-a873-ac9d24b26ca9.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นายจำนง ศรีดาวงษ์</h3><p class="text-xs text-slate-500">ผู้อำนวยการ</p></div>
+                                <div><img src="https://placehold.co/200x200/aed6f1/ffffff?text=ครู" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นางพรรณี โพธิสาร</h3><p class="text-xs text-slate-500">ครูชำนาญการพิเศษ</p></div>
+                                <div><img src="https://img2.pic.in.th/pic/df96e94c-91b2-4c00-8882-e7056de0b0c2.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นางอุไรวรรณ ศรีพิมมาส</h3><p class="text-xs text-slate-500">ครูชำนาญการพิเศษ</p></div>
+                                <div><img src="https://img5.pic.in.th/file/secure-sv1/00b83918-82bc-4f8f-8caf-578181cab6eb.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นางจุรีพร ผจงศิลป์</h3><p class="text-xs text-slate-500">ครูชำนาญการพิเศษ</p></div>
+                                <div><img src="https://img2.pic.in.th/pic/1649bcbb-54fa-49ac-a770-b76e6e51cff5.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นายวีระศักดิ์ โพธิสาร</h3><p class="text-xs text-slate-500">ครูชำนาญการพิเศษ</p></div>
+                                <div><img src="https://img2.pic.in.th/pic/899bf469-3225-46bd-980a-fe28c3a1b96d.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นายวินัย ผจงศิลป์</h3><p class="text-xs text-slate-500">ครูชำนาญการพิเศษ</p></div>
+                                <div><img src="https://placehold.co/200x200/aed6f1/ffffff?text=ครู" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นายรัตน ศรีทนษา</h3><p class="text-xs text-slate-500">ครูชำนาญการพิเศษ</p></div>
+                                <div><img src="https://placehold.co/200x200/aed6f1/ffffff?text=ครู" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นางมัสลิน ปุลาสะเก</h3><p class="text-xs text-slate-500">ครูชำนาญการพิเศษ</p></div>
+                                <div><img src="https://img2.pic.in.th/pic/4185c2b8-f5ff-4e04-a8fc-29a16ebaecec.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นายสุระพล นาคศรี</h3><p class="text-xs text-slate-500">ครูชำนาญการพิเศษ</p></div>
+                                <div><img src="https://placehold.co/200x200/aed6f1/ffffff?text=ครู" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นางสุนิดา ใจสอาด</h3><p class="text-xs text-slate-500">ครูชำนาญการพิเศษ</p></div>
+                                <div><img src="https://img2.pic.in.th/pic/d7262d21-e038-4de3-b9ae-e62dd9b3963b.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นางนันทิภา อบอุ่น</h3><p class="text-xs text-slate-500">ครูชำนาญการ</p></div>
+                                <div><img src="https://img2.pic.in.th/pic/95646331-e436-4bbb-a851-f0d13e74ac9e.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">น.ส.พนิตสุภา ชนะรินทร์</h3><p class="text-xs text-slate-500">ครูชำนาญการ</p></div>
+                                <div><img src="https://img2.pic.in.th/pic/9dcac253-ed76-40f9-9072-188e7e34f78d.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นางกนิษฐา สุกทน</h3><p class="text-xs text-slate-500">ครู</p></div>
+                                <div><img src="https://img2.pic.in.th/pic/8034275f-7009-4b43-aca9-01dfcfd0213be5ba3ab1639c3f5f.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">น.ส.นาตยา คำวันดี</h3><p class="text-xs text-slate-500">ครู</p></div>
+                                <div><img src="https://img2.pic.in.th/pic/d48ff0cb-92b1-496d-a9ce-864fc800e444.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นายเขมนันท์ ขุนสอน</h3><p class="text-xs text-slate-500">ครู</p></div>
+                                <div><img src="https://img2.pic.in.th/pic/63152069-4234-4511-85c8-65e65f7e3970.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">น.ส.สุรัชดากร เพชรมณี</h3><p class="text-xs text-slate-500">ครูผู้ช่วย</p></div>
+                                <div><img src="https://placehold.co/200x200/aed6f1/ffffff?text=ครู" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นางอุบล แก้วแสนเมือง</h3><p class="text-xs text-slate-500">พนักงานราชการ</p></div>
+                                <div><img src="https://img5.pic.in.th/file/secure-sv1/1377e4da-7eab-46be-9e31-3c700944377e.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">น.ส.กาญจนา เวียงปัตติ</h3><p class="text-xs text-slate-500">ครูอัตราจ้าง</p></div>
+                                <div><img src="https://img2.pic.in.th/pic/bec0fc67-70a3-41ab-9070-3a75991c01dd.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นายจักรกริช หวายฤทธิ์</h3><p class="text-xs text-slate-500">เจ้าหน้าที่ธุระการ</p></div>
+                                <div><img src="https://img5.pic.in.th/file/secure-sv1/5c3927a3-2cd3-4677-a363-08f89ba69295.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นายพงษ์ภรณ์ ศรีสุพัฒน์</h3><p class="text-xs text-slate-500">นักการภารโรง</p></div>
+                            </div>
                         </div>
-                         <div class="bg-white p-6 rounded-lg shadow-md">
-                             <h3 class="text-xl font-semibold mb-4 text-slate-800">กลุ่มบริหารงานบุคคล</h3>
-                             <p class="text-slate-600 mb-4">รับผิดชอบการบริหารจัดการทรัพยากรบุคคล, สวัสดิการ, และการพัฒนาบุคลากร</p>
-                             <div class="border-t border-slate-200 pt-4 space-y-3">
-                                <div class="flex items-center space-x-4">
-                                    <img src="https://placehold.co/100x100/aed6f1/ffffff?text=ครู" alt="[Image of บุคลากร]" class="w-12 h-12 rounded-full">
-                                    <div>
-                                        <p class="font-medium text-slate-800">นายรัตน ศรีทนษา</p>
-                                        <p class="text-sm text-slate-500">หัวหน้ากลุ่มบริหารงานบุคคล</p>
-                                    </div>
-                                    <img src="https://placehold.co/100x100/aed6f1/ffffff?text=ครู" alt="[Image of บุคลากร]" class="w-12 h-12 rounded-full">
-                                    <div>
-                                        <p class="font-medium text-slate-800">นางอุบล แก้วแสนเมือง</p>
-                                        <p class="text-sm text-slate-500">งานสวัสดิการ</p>
-                                    </div>
-                                </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h2 class="text-2xl font-semibold mb-6 text-slate-800">คณะกรรมการสถานศึกษา</h2>
+                             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 text-center">
+                                 <div><img src="https://placehold.co/200x200/d6eaf8/ffffff?text=ประธาน" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md"><h4 class="font-medium">นายสง่า แสงกล้า</h4><p class="text-xs text-slate-500">ประธานกรรมการ</p></div>
+                                 <div><img src="https://placehold.co/200x200/d6eaf8/ffffff?text=กรรมการ" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md"><h4 class="font-medium">นายวิรัตน์ นามวิเศษ</h4><p class="text-xs text-slate-500">กรรมการผู้ทรงคุณวุฒิ</p></div>
+                                 <div><img src="https://placehold.co/200x200/d6eaf8/ffffff?text=กรรมการ" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md"><h4 class="font-medium">นายสมชิต ชินทวรรณ</h4><p class="text-xs text-slate-500">กรรมการผู้แทนพระภิกษุสงฆ์</p></div>
+                                 <div><img src="https://placehold.co/200x200/d6eaf8/ffffff?text=กรรมการ" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md"><h4 class="font-medium">นายบุญรอด แก้วอาจ</h4><p class="text-xs text-slate-500">กรรมการผู้แทนผู้ปกครอง</p></div>
+                                 <div><img src="https://placehold.co/200x200/d6eaf8/ffffff?text=กรรมการ" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md"><h4 class="font-medium">นายวีระศักดิ์ โพธิสาร</h4><p class="text-xs text-slate-500">กรรมการผู้แทนครู</p></div>
+                                 <div><img src="https://placehold.co/200x200/d6eaf8/ffffff?text=กรรมการ" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md"><h4 class="font-medium">นางยุพิน ราชชมภู</h4><p class="text-xs text-slate-500">กรรมการผู้แทนศิษย์เก่า</p></div>
+                                 <div><img src="https://placehold.co/200x200/d6eaf8/ffffff?text=กรรมการ" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md"><h4 class="font-medium">นายบุญพร้อม ยะกุมาร</h4><p class="text-xs text-slate-500">กรรมการผู้แทนองค์กรชุมชน</p></div>
+                                 <div><img src="https://placehold.co/200x200/d6eaf8/ffffff?text=กรรมการ" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md"><h4 class="font-medium">นายประเสริฐ ขันมา</h4><p class="text-xs text-slate-500">กรรมการผู้แทนองค์กรปกครองส่วนท้องถิ่น</p></div>
+                                 <div><img src="https://img2.pic.in.th/pic/4b7bd122-7e02-4c83-a873-ac9d24b26ca9.png" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md"><h4 class="font-medium">นายจำนง ศรีดาวงษ์</h4><p class="text-xs text-slate-500">กรรมการและเลขานุการ</p></div>
                              </div>
-                        </div>
-                         <div class="bg-white p-6 rounded-lg shadow-md">
-                             <h3 class="text-xl font-semibold mb-4 text-slate-800">กลุ่มงานบริหารทั่วไป</h3>
-                             <p class="text-slate-600 mb-4">บริหารจัดการงานธุรการ, อาคารสถานที่, และสนับสนุนการดำเนินงานของโรงเรียน</p>
-                             <div class="border-t border-slate-200 pt-4 space-y-3">
-                                <div class="flex items-center space-x-4">
-                                    <img src="https://img2.pic.in.th/pic/1649bcbb-54fa-49ac-a770-b76e6e51cff5.png" alt="[Image of บุคลากร]" class="w-12 h-12 rounded-full">
-                                    <div>
-                                        <p class="font-medium text-slate-800">นายวีระศักดิ์ โพธิสาร</p>
-                                        <p class="text-sm text-slate-500">หัวหน้ากลุ่มงานบริหารทั่วไป</p>
-                                    </div>
-                                    <img src="https://img2.pic.in.th/pic/899bf469-3225-46bd-980a-fe28c3a1b96d.png" alt="[Image of บุคลากร]" class="w-12 h-12 rounded-full">
-                                    <div>
-                                        <p class="font-medium text-slate-800">นายวินัย ผจงศิลป์</p>
-                                        <p class="text-sm text-slate-500">งานโครงการ/กิจกรรม</p>
-                                    </div>
-                                    <img src="https://img2.pic.in.th/pic/4185c2b8-f5ff-4e04-a8fc-29a16ebaecec.png" alt="[Image of บุคลากร]" class="w-12 h-12 rounded-full">
-                                    <div>
-                                        <p class="font-medium text-slate-800">นายสุระพล นาคศรี</p>
-                                        <p class="text-sm text-slate-500">งานโครงการ/กิจกรรม</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center space-x-4">
-                                    <img src="https://img2.pic.in.th/pic/d48ff0cb-92b1-496d-a9ce-864fc800e444.png" alt="[Image of บุคลากร]" class="w-12 h-12 rounded-full">
-                                    <div>
-                                        <p class="font-medium text-slate-800">นายเขมนันท์ ขุนสอน</p>
-                                        <p class="text-sm text-slate-500">งานโครงการ/กิจกรรม</p>
-                                    </div>
-                                    <img src="https://img2.pic.in.th/pic/bec0fc67-70a3-41ab-9070-3a75991c01dd.png" alt="[Image of บุคลากร]" class="w-12 h-12 rounded-full">
-                                    <div>
-                                        <p class="font-medium text-slate-800">นายจักรกริช หวายฤทธิ์</p>
-                                        <p class="text-sm text-slate-500">งานธุรการ/งานมอบหมาย</p>
-                                    </div>
-                                    <img src="https://img5.pic.in.th/file/secure-sv1/5c3927a3-2cd3-4677-a363-08f89ba69295.png" alt="[Image of บุคลากร]" class="w-12 h-12 rounded-full">
-                                    <div>
-                                        <p class="font-medium text-slate-800">นายพงษ์ภรณ์ ศรีสุพัฒน์</p>
-                                        <p class="text-sm text-slate-500">งานนักการภารโรง/มอบหมาย</p>
-                                    </div>
-                                </div>
-                             </div>
-                        </div>
-                         <div class="bg-white p-6 rounded-lg shadow-md">
-                             <h3 class="text-xl font-semibold mb-4 text-slate-800">กลุ่มบริหารงบประมาณ</h3>
-                             <p class="text-slate-600 mb-4">วางแผน, จัดสรร, และควบคุมการใช้งบประมาณของโรงเรียนให้เป็นไปอย่างมีประสิทธิภาพ</p>
-                             <div class="border-t border-slate-200 pt-4 space-y-3">
-                                <div class="flex items-center space-x-4">
-                                    <img src="https://img2.pic.in.th/pic/df96e94c-91b2-4c00-8882-e7056de0b0c2.png" alt="[Image of บุคลากร]" class="w-12 h-12 rounded-full">
-                                    <div>
-                                        <p class="font-medium text-slate-800">นางอุไรวรรณ ศรีพิมมาส</p>
-                                        <p class="text-sm text-slate-500">หัวหน้ากลุ่มบริหารงบประมาณ</p>
-                                    </div>
-                                    <img src="https://img2.pic.in.th/pic/d7262d21-e038-4de3-b9ae-e62dd9b3963b.png" alt="[Image of บุคลากร]" class="w-12 h-12 rounded-full">
-                                    <div>
-                                        <p class="font-medium text-slate-800">นางนันทิภา อบอุ่น</p>
-                                        <p class="text-sm text-slate-500">เจ้าหน้าที่การเงิน</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center space-x-4">
-                                    <img src="https://placehold.co/100x100/aed6f1/ffffff?text=ครู" alt="[Image of บุคลากร]" class="w-12 h-12 rounded-full">
-                                    <div>
-                                        <p class="font-medium text-slate-800">นางสุนิดา ใจสอาด</p>
-                                        <p class="text-sm text-slate-500">เจ้าหน้าที่พัสดุ</p>
-                                    </div>
-                                    <img src="https://img2.pic.in.th/pic/9dcac253-ed76-40f9-9072-188e7e34f78d.png" alt="[Image of บุคลากร]" class="w-12 h-12 rounded-full">
-                                    <div>
-                                        <p class="font-medium text-slate-800">นางกนิษฐา สุกทน</p>
-                                        <p class="text-sm text-slate-500">ผู้ช่วยเจ้าหน้าที่พัสดุ</p>
-                                    </div>
-                                </div>
-                             </div>
-                        </div>
-                    </div>
-
-                     <!-- School Board -->
-                    <div class="bg-white p-6 rounded-lg shadow-md mt-6">
-                        <h2 class="text-2xl font-semibold mb-6 text-slate-800">คณะกรรมการสถานศึกษา</h2>
-                         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-8 text-center">
-                            <div>
-                                <img src="https://placehold.co/200x200/d6eaf8/ffffff?text=ประธาน" alt="Board Member" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นายสง่า แสงกล้า</h3>
-                                <p class="text-sm text-slate-500">ประธานกรรมการ</p>
-                            </div>
-                             <div>
-                                <img src="https://placehold.co/200x200/d6eaf8/ffffff?text=กรรมการ" alt="Board Member" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นายกุศล กาสี</h3>
-                                <p class="text-sm text-slate-500">กรรมการผู้ทรงคุณวุฒิ</p>
-                            </div>
-                            <div>
-                                <img src="https://placehold.co/200x200/d6eaf8/ffffff?text=กรรมการ" alt="Board Member" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นายแพทย์สมเกียรติ ราชมนตรี</h3>
-                                <p class="text-sm text-slate-500">กรรมการผู้แทนพระภิกษุสงฆ์</p>
-                            </div>
-                             <div>
-                                <img src="https://placehold.co/200x200/d6eaf8/ffffff?text=กรรมการ" alt="Board Member" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นางยุพิน ราชชมภู</h3>
-                                <p class="text-sm text-slate-500">กรรมการผู้แทนผู้ปกครอง</p>
-                            </div>
-                             <div>
-                                <img src="https://img2.pic.in.th/pic/1649bcbb-54fa-49ac-a770-b76e6e51cff5.png" alt="Board Member" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นายวีระศักดิ์ โพธิสาร</h3>
-                                <p class="text-sm text-slate-500">กรรมการผู้แทนครู</p>
-                            </div>
-                            <div>
-                                <img src="https://placehold.co/200x200/d6eaf8/ffffff?text=กรรมการ" alt="Board Member" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นางยุพิน ราชชมภู</h3>
-                                <p class="text-sm text-slate-500">กรรมการผู้แทนศิษย์เก่า</p>
-                            </div>
-                            <div>
-                                <img src="https://placehold.co/200x200/d6eaf8/ffffff?text=กรรมการ" alt="Board Member" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นายสมชิต ชินทวรรณ</h3>
-                                <p class="text-sm text-slate-500">กรรมการผู้แทนองค์กรชุมชน</p>
-                            </div>
-                            <div>
-                                <img src="https://placehold.co/200x200/d6eaf8/ffffff?text=กรรมการ" alt="Board Member" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นางสมมุต ใจดี</h3>
-                                <p class="text-sm text-slate-500">กรรมการผู้แทนองค์กรปกครองส่วนท้องถิ่น</p>
-                            </div>
-                            <div>
-                                <img src="https://img2.pic.in.th/pic/4b7bd122-7e02-4c83-a873-ac9d24b26ca9.png" alt="Board Member" class="w-24 h-24 rounded-full mx-auto mb-2 shadow-md">
-                                <h3 class="font-semibold">นายจำนง ศรีดาวงษ์</h3>
-                                <p class="text-sm text-slate-500">กรรมการและเลขานุการ</p>
-                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            
+            <!-- Administration Section -->
+            <div id="administration" class="content-section p-4 sm:p-6 lg:p-8">
+                 <div class="max-w-7xl mx-auto">
+                    <div class="mb-8">
+                        <h1 class="text-3xl font-bold text-slate-900">การบริหารงาน 4 ฝ่าย</h1>
+                        <p class="mt-2 text-slate-600">โครงสร้างและบุคลากรผู้รับผิดชอบในกลุ่มงานบริหารหลักของโรงเรียน</p>
+                    </div>
+                     <div class="space-y-8">
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h2 class="text-2xl font-semibold mb-4 text-slate-800">งานบริหารวิชาการ</h2>
+                            <p class="text-slate-600 mb-6">ดูแลและพัฒนาหลักสูตร, การวัดผลประเมินผล, และส่งเสริมความเป็นเลิศทางวิชาการ</p>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-center">
+                                 <div><img src="https://placehold.co/200x200/aed6f1/ffffff?text=ครู" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นางพรรณี โพธิสาร</h3><p class="text-xs text-slate-500">หัวหน้ากลุ่มงาน</p></div>
+                                 <div><img src="https://img5.pic.in.th/file/secure-sv1/00b83918-82bc-4f8f-8caf-578181cab6eb.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นางจุรีพร ผจงศิลป์</h3><p class="text-xs text-slate-500">กิจกรรมทัศนศึกษา</p></div>
+                                 <div><img src="https://img2.pic.in.th/pic/95646331-e436-4bbb-a851-f0d13e74ac9e.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">น.ส.พนิตสุภา ชนะรินทร์</h3><p class="text-xs text-slate-500">งานประกันภายใน</p></div>
+                                 <div><img src="https://img2.pic.in.th/pic/8034275f-7009-4b43-aca9-01dfcfd0213be5ba3ab1639c3f5f.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">น.ส.นาตยา คำวันดี</h3><p class="text-xs text-slate-500">โครงการ/กิจกรรม ระดับอนุบาล</p></div>
+                                 <div><img src="https://img2.pic.in.th/pic/63152069-4234-4511-85c8-65e65f7e3970.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">น.ส.สุรัชดากร เพชรมณี</h3><p class="text-xs text-slate-500">โครงการ/กิจกรรม</p></div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                             <h2 class="text-2xl font-semibold mb-4 text-slate-800">งานบริหารงานบุคคล</h2>
+                             <p class="text-slate-600 mb-6">รับผิดชอบการบริหารจัดการทรัพยากรบุคคล, สวัสดิการ, และการพัฒนาบุคลากร</p>
+                             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-center">
+                                 <div><img src="https://placehold.co/200x200/aed6f1/ffffff?text=ครู" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นายรัตน ศรีทนษา</h3><p class="text-xs text-slate-500">หัวหน้างานบริหารงานบุคคล</p></div>
+                                 <div><img src="https://placehold.co/200x200/aed6f1/ffffff?text=ครู" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นางอุบล แก้วแสนเมือง</h3><p class="text-xs text-slate-500">งานสวัสดิการ</p></div>
+                             </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                             <h2 class="text-2xl font-semibold mb-4 text-slate-800">งานบริหารงบประมาณ</h2>
+                             <p class="text-slate-600 mb-6">วางแผน, จัดสรร, และควบคุมการใช้งบประมาณของโรงเรียนให้เป็นไปอย่างมีประสิทธิภาพ</p>
+                             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-center">
+                                <div><img src="https://img2.pic.in.th/pic/df96e94c-91b2-4c00-8882-e7056de0b0c2.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นางอุไรวรรณ ศรีพิมมาส</h3><p class="text-xs text-slate-500">หัวหน้างานบริหารงบประมาณ</p></div>
+                                <div><img src="https://placehold.co/200x200/aed6f1/ffffff?text=ครู" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นางสุนิดา ใจสอาด</h3><p class="text-xs text-slate-500">หัวหน้าพัสดุ</p></div>
+                                <div><img src="https://img2.pic.in.th/pic/d7262d21-e038-4de3-b9ae-e62dd9b3963b.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นางนันทิภา อบอุ่น</h3><p class="text-xs text-slate-500">เจ้าหน้าที่การเงิน</p></div>
+                                <div><img src="https://img2.pic.in.th/pic/9dcac253-ed76-40f9-9072-188e7e34f78d.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นางกนิษฐา สุกทน</h3><p class="text-xs text-slate-500">เจ้าหน้าที่พัสดุ</p></div>
+                             </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                             <h2 class="text-2xl font-semibold mb-4 text-slate-800">งานบริหารทั่วไป</h2>
+                             <p class="text-slate-600 mb-6">บริหารจัดการงานธุรการ, อาคารสถานที่, และสนับสนุนการดำเนินงานของโรงเรียน</p>
+                             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-center">
+                                 <div><img src="https://img2.pic.in.th/pic/1649bcbb-54fa-49ac-a770-b76e6e51cff5.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นายวีระศักดิ์ โพธิสาร</h3><p class="text-xs text-slate-500">หัวหน้างานบริหารทั่วไป</p></div>
+                                 <div><img src="https://img2.pic.in.th/pic/899bf469-3225-46bd-980a-fe28c3a1b96d.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นายวินัย ผจงศิลป์</h3><p class="text-xs text-slate-500">โครงการ/กิจกรรม</p></div>
+                                 <div><img src="https://img2.pic.in.th/pic/4185c2b8-f5ff-4e04-a8fc-29a16ebaecec.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นายสุระพล นาคศรี</h3><p class="text-xs text-slate-500">โครงการ/กิจกรรม</p></div>
+                                 <div><img src="https://placehold.co/200x200/aed6f1/ffffff?text=ครู" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นางมัสลิน ปุลาสะเก</h3><p class="text-xs text-slate-500">โครงการ/กิจกรรม</p></div>
+                                 <div><img src="https://img2.pic.in.th/pic/d48ff0cb-92b1-496d-a9ce-864fc800e444.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นายเขมนันท์ ขุนสอน</h3><p class="text-xs text-slate-500">โครงการ/กิจกรรม</p></div>
+                                 <div><img src="https://img5.pic.in.th/file/secure-sv1/1377e4da-7eab-46be-9e31-3c700944377e.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">น.ส.กาญจนา เวียงปัตติ</h3><p class="text-xs text-slate-500">โครงการ/กิจกรรม</p></div>
+                                 <div><img src="https://img2.pic.in.th/pic/bec0fc67-70a3-41ab-9070-3a75991c01dd.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นายจักรกริช หวายฤทธิ์</h3><p class="text-xs text-slate-500">งานธุรการ</p></div>
+                                 <div><img src="https://img5.pic.in.th/file/secure-sv1/5c3927a3-2cd3-4677-a363-08f89ba69295.png" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover shadow-md"><h3 class="font-medium">นายพงษ์ภรณ์ ศรีสุพัฒน์</h3><p class="text-xs text-slate-500">นักการภารโรง</p></div>
+                             </div>
+                        </div>
+                    </div>
+                 </div>
             </div>
 
             <!-- Announcements Section -->
@@ -513,17 +392,6 @@
                                 <p class="text-sm text-slate-500">18 มิ.ย. 2568</p>
                                 <h3 class="font-semibold text-lg text-slate-800">ขอแสดงความยินดีกับนักเรียนที่ได้รับรางวัลแข่งขันทักษะวิชาการ</h3>
                                 <p class="text-slate-600 mt-1">โรงเรียนขอแสดงความยินดีกับตัวแทนนักเรียนที่ได้รับรางวัลจากการแข่งขันระดับประเทศ...</p>
-                                <a href="#" class="text-sky-600 hover:underline text-sm font-medium mt-2 inline-block">อ่านเพิ่มเติม</a>
-                            </div>
-                        </div>
-                        <div class="bg-white p-4 rounded-lg shadow-md flex items-start space-x-4">
-                            <div class="flex-shrink-0 bg-amber-100 text-amber-700 rounded-lg p-3">
-                                <span class="text-2xl">💉</span>
-                            </div>
-                            <div>
-                                <p class="text-sm text-slate-500">15 มิ.ย. 2568</p>
-                                <h3 class="font-semibold text-lg text-slate-800">ประกาศการฉีดวัคซีนป้องกันไข้หวัดใหญ่สำหรับนักเรียน</h3>
-                                <p class="text-slate-600 mt-1">โรงเรียนจะให้บริการฉีดวัคซีนไข้หวัดใหญ่สำหรับนักเรียนที่ประสงค์เข้ารับบริการ ในวันที่ 30 มิถุนายน 2568</p>
                                 <a href="#" class="text-sky-600 hover:underline text-sm font-medium mt-2 inline-block">อ่านเพิ่มเติม</a>
                             </div>
                         </div>
@@ -559,6 +427,46 @@
                 </div>
             </div>
 
+            <!-- E-book Section -->
+            <div id="ebooks" class="content-section p-4 sm:p-6 lg:p-8">
+                <div class="max-w-7xl mx-auto">
+                    <div class="mb-8">
+                        <h1 class="text-3xl font-bold text-slate-900">หนังสืออิเล็กทรอนิกส์ (e-book)</h1>
+                        <p class="mt-2 text-slate-600">แหล่งรวบรวมหนังสือและสื่อการเรียนรู้ในรูปแบบดิจิทัลสำหรับนักเรียนและบุคลากร</p>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                        <a href="https://fliphtml5.com/bookcase/dpwol/" target="_blank" class="block bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                           <img src="https://img5.pic.in.th/file/secure-sv1/434a3b646af618d8d0232c694c05f8d6.jpg" class="w-full h-auto object-cover" alt="[Image of ปกหนังสือ e-book]">
+                           <div class="p-4">
+                               <h3 class="font-semibold text-lg">คลัง E-book</h3>
+                               <p class="text-sm text-slate-500 mt-1">รวมหนังสืออิเล็กทรอนิกส์ของโรงเรียน</p>
+                           </div>
+                        </a>
+                        <a href="#" target="_blank" class="block bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                           <img src="https://placehold.co/400x600/2ecc71/ffffff?text=ปกหนังสือ+วิทยาศาสตร์" class="w-full h-auto object-cover" alt="[Image of ปกหนังสือ วิทยาศาสตร์]">
+                            <div class="p-4">
+                                <h3 class="font-semibold text-lg">วิทยาศาสตร์ ป.6</h3>
+                                <p class="text-sm text-slate-500 mt-1">เนื้อหาการทดลองและบทเรียนวิทยาศาสตร์ ป.6</p>
+                            </div>
+                        </a>
+                        <a href="#" target="_blank" class="block bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                           <img src="https://placehold.co/400x600/e74c3c/ffffff?text=ปกหนังสือ+ภาษาไทย" class="w-full h-auto object-cover" alt="[Image of ปกหนังสือ ภาษาไทย]">
+                            <div class="p-4">
+                                <h3 class="font-semibold text-lg">วรรณคดีไทย</h3>
+                                <p class="text-sm text-slate-500 mt-1">รวมบทวิเคราะห์และเรื่องย่อวรรณคดีที่สำคัญ</p>
+                            </div>
+                        </a>
+                        <a href="#" target="_blank" class="block bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                           <img src="https://placehold.co/400x600/f1c40f/ffffff?text=ปกวารสารโรงเรียน" class="w-full h-auto object-cover" alt="[Image of ปกวารสารโรงเรียน]">
+                            <div class="p-4">
+                                <h3 class="font-semibold text-lg">วารสารศรีสมบูรณ์</h3>
+                                <p class="text-sm text-slate-500 mt-1">ข่าวสารและกิจกรรมเด่นประจำภาคเรียน</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
             <!-- Admission Section -->
             <div id="admission" class="content-section p-4 sm:p-6 lg:p-8">
                  <div class="max-w-7xl mx-auto">
@@ -577,8 +485,9 @@
                                     <input name="studentDob" required class="w-full bg-slate-100 text-slate-900 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500" type="date" placeholder="วัน/เดือน/ปีเกิด*">
                                     <select name="studentLevel" required class="w-full bg-slate-100 text-slate-900 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500">
                                         <option value="" disabled selected>ระดับชั้นที่สมัคร*</option>
+                                        <option>อนุบาลปีที่ 1</option>
+                                        <option>ประถมศึกษาปีที่ 1</option>
                                         <option>มัธยมศึกษาปีที่ 1</option>
-                                        <option>มัธยมศึกษาปีที่ 4</option>
                                     </select>
                                 </div>
                                 <div class="mt-4">
@@ -625,6 +534,7 @@
         <footer class="bg-white mt-12">
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm text-slate-500">
                 <p>โรงเรียนศรีสมบูรณ์วิทยา | หมู่ 9 ตำบลหนองโก อำเภอกระนวน จังหวัดขอนแก่น 40170</p>
+                <p>ผู้ดูแลระบบ : นายรัตน ศรีทนษา Line ID : rattanasritonsa & sritonsa@gmail.com</p>
                 <p class="mt-1">&copy; 2568 โรงเรียนศรีสมบูรณ์วิทยา. สงวนลิขสิทธิ์.</p>
             </div>
         </footer>
@@ -680,6 +590,21 @@
             const initialSection = window.location.hash || '#dashboard';
             showSection(initialSection, false);
 
+            const chartConfigs = {
+                barChartOptions: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true, suggestedMax: 100 } },
+                    plugins: { legend: { display: false } }
+                },
+                onetBarChartOptions: {
+                     responsive: true,
+                     maintainAspectRatio: false,
+                     scales: { y: { beginAtZero: true, suggestedMax: 100 } },
+                     plugins: { legend: { position: 'bottom' } }
+                }
+            };
+            
             const enrollmentCtx = document.getElementById('enrollmentChart')?.getContext('2d');
             if(enrollmentCtx) {
                 new Chart(enrollmentCtx, {
@@ -717,6 +642,70 @@
                         }]
                     },
                     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { padding: 15 } } } }
+                });
+            }
+
+            const rtScoreCtx = document.getElementById('rtScoreChart')?.getContext('2d');
+            if(rtScoreCtx) {
+                new Chart(rtScoreCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['2565', '2566', '2567', '2568'],
+                        datasets: [
+                            { label: 'อ่านออกเสียง', data: [74.0, 75.5, 78.2, 79.1], backgroundColor: '#38bdf8' },
+                            { label: 'อ่านรู้เรื่อง', data: [70.5, 72.1, 74.5, 76.8], backgroundColor: '#7dd3fc' }
+                        ]
+                    },
+                    options: chartConfigs.onetBarChartOptions
+                });
+            }
+
+            const ntScoreCtx = document.getElementById('ntScoreChart')?.getContext('2d');
+            if(ntScoreCtx) {
+                 new Chart(ntScoreCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['2565', '2566', '2567', '2568'],
+                        datasets: [
+                            { label: 'คณิตศาสตร์', data: [63.5, 65.2, 68.9, 70.3], backgroundColor: '#38bdf8' },
+                            { label: 'ภาษาไทย', data: [66.8, 68.4, 70.1, 72.5], backgroundColor: '#7dd3fc' }
+                        ]
+                    },
+                    options: chartConfigs.onetBarChartOptions
+                });
+            }
+            
+            const onetP6ScoreCtx = document.getElementById('onetP6ScoreChart')?.getContext('2d');
+             if(onetP6ScoreCtx) {
+                 new Chart(onetP6ScoreCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['2565', '2566', '2567', '2568'],
+                        datasets: [
+                            { label: 'คณิตศาสตร์', data: [44.1, 45.8, 47.2, 48.1], backgroundColor: '#0ea5e9'},
+                            { label: 'วิทยาศาสตร์', data: [48.9, 50.1, 52.3, 53.0], backgroundColor: '#38bdf8'},
+                            { label: 'ภาษาไทย', data: [54.2, 55.9, 58.0, 59.2], backgroundColor: '#7dd3fc'},
+                            { label: 'ภาษาอังกฤษ', data: [40.7, 42.3, 44.5, 45.6], backgroundColor: '#bae6fd'}
+                        ]
+                    },
+                    options: chartConfigs.onetBarChartOptions
+                });
+            }
+
+            const onetM3ScoreCtx = document.getElementById('onetM3ScoreChart')?.getContext('2d');
+            if(onetM3ScoreCtx) {
+                 new Chart(onetM3ScoreCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['2565', '2566', '2567', '2568'],
+                        datasets: [
+                            { label: 'คณิตศาสตร์', data: [37.2, 38.5, 40.1, 41.3], backgroundColor: '#0ea5e9'},
+                            { label: 'วิทยาศาสตร์', data: [41.5, 42.7, 44.8, 45.9], backgroundColor: '#38bdf8'},
+                            { label: 'ภาษาไทย', data: [48.0, 49.5, 51.2, 52.8], backgroundColor: '#7dd3fc'},
+                            { label: 'ภาษาอังกฤษ', data: [34.1, 35.6, 37.9, 39.1], backgroundColor: '#bae6fd'}
+                        ]
+                    },
+                    options: chartConfigs.onetBarChartOptions
                 });
             }
 
